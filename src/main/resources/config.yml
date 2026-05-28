@@ -34,6 +34,9 @@ messages:
   # Self-removal protection error
   self-removal-denied: "&cYou cannot remove yourself from the whitelist!"
   
+  # Admin mutiny protection error
+  admin-removal-denied: "&cYou cannot remove another Whitelist Manager from the whitelist!"
+  
   # Admin administration messages
   admin-added: "&a[WL-Admin] %player% (%uuid%) has been promoted to Whitelist Manager."
   admin-already-exists: "&e[WL-Admin] This player is already a Whitelist Manager."
@@ -60,6 +63,7 @@ messages:
 #   no-permission: "&cBu komutu kullanmak için yetkiniz bulunmamaktadır!"
 #   console-only: "&c[WL-Admin] Bu komut sadece sunucu konsolundan çalıştırılabilir!"
 #   self-removal-denied: "&cKendi kendinizi whitelist'ten çıkaramazsınız!"
+#   admin-removal-denied: "&cBir Whitelist Yöneticisini whitelist'ten çıkaramazsınız!"
 #   admin-added: "&a[WL-Admin] %player% (%uuid%) adlı oyuncuya whitelist yetkisi verildi."
 #   admin-already-exists: "&e[WL-Admin] Bu oyuncu zaten yetki listesinde bulunuyor."
 #   admin-removed: "&a[WL-Admin] %player% adlı oyuncunun whitelist yetkisi geri alındı."

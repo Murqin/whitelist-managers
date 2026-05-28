@@ -78,6 +78,13 @@ public class WlCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
+                // Prevent mutiny: a manager cannot remove another manager from the whitelist
+                if (cm.isAllowed(targetPlayer.getUniqueId())) {
+                    String msg = cm.getMessage("admin-removal-denied", "§cYou cannot remove another Whitelist Manager from the whitelist!");
+                    sender.sendMessage(msg);
+                    return true;
+                }
+
                 if (!targetPlayer.isWhitelisted()) {
                     String msg = cm.getMessage("whitelist-already-removed", "§e%player% is not whitelisted.")
                             .replace("%player%", targetName);

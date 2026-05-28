@@ -3,7 +3,7 @@
 [![Minecraft](https://img.shields.io/badge/Minecraft-26.1.2%2B-red.svg?style=flat-square&color=c71d22)](https://papermc.io)
 [![Java](https://img.shields.io/badge/Java-25%2B-blue.svg?style=flat-square&color=e58e26)](https://oracle.com/java)
 [![Platform](https://img.shields.io/badge/Platform-Paper%20%7C%20Purpur-orange.svg?style=flat-square&color=f39c12)](https://papermc.io)
-[![Version](https://img.shields.io/badge/Version-1.5.0-green.svg?style=flat-square&color=2ecc71)](https://github.com)
+[![Version](https://img.shields.io/badge/Version-1.6.0-green.svg?style=flat-square&color=2ecc71)](https://github.com)
 
 **Whitelist-Managers** is a lightweight, robust, and zero-dependency administration tool built exclusively for modern **Paper** and **Purpur** servers (compiled with **Java 25**).
 
@@ -14,7 +14,7 @@ It provides server administrators with a simple, secure, and OP-safe mechanism t
 ## 🚀 Key Features
 
 *   **🔒 Console-Locked Promotion (`/wladmin`)**: Granting or revoking whitelist manager privileges can *only* be done directly from the server console terminal. Any in-game attempts, even by OPs, are rejected.
-*   **🚫 Self-Removal Protection**: Prevents authorized whitelist managers from accidentally removing themselves from the whitelist, avoiding accidental lockout and connection loops.
+*   **🛡️ Mutiny & Lockout Protection**: Whitelist managers cannot remove themselves or other promoted Whitelist Managers from the whitelist, preventing accidental lockout cycles and unauthorized admin mutinies.
 *   **⚡ Connection-Kicking on Removal**: When an authorized manager removes a player using `/wl remove`, the target player is immediately kicked from the server using the modern Adventure API.
 *   **🔄 UUID-Safe Synchronization**: Keeps track of managers using Mojang UUIDs. In-game usernames stored in `config.yml` are dynamically updated if a manager changes their Minecraft username.
 *   **💡 Intelligent Tab-Completion**:
@@ -59,6 +59,6 @@ allowed-players:
 ## 📥 Quick Installation Guide
 
 1. Ensure your server is running on **Java 25** (standard for Paper 26.1.2+).
-2. Download `whitelist-managers-1.5.0.jar` and drop it into your server's `plugins/` folder.
+2. Download `whitelist-managers-1.6.0.jar` and drop it into your server's `plugins/` folder.
 3. Start or restart your server.
 4. From the server console terminal, run `/wladmin add YourName` to promote yourself!

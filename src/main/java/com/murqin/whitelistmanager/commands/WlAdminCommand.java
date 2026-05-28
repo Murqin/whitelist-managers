@@ -36,7 +36,7 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
 
         // Enforce Console only sender
         if (!(sender instanceof ConsoleCommandSender)) {
-            String msg = cm.getMessage("console-only", "§c[WL-Admin] Bu komut sadece sunucu konsolundan çalıştırılabilir!");
+            String msg = cm.getMessage("console-only", "§c[WL-Admin] This command can only be executed from the server console!");
             sender.sendMessage(msg);
             return true;
         }
@@ -50,7 +50,7 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
         switch (sub) {
             case "add" -> {
                 if (args.length < 2) {
-                    sender.sendMessage("§cKullanım: /wladmin add <oyuncu>");
+                    sender.sendMessage("§cUsage: /wladmin add <player>");
                     return true;
                 }
                 String targetName = args[1];
@@ -64,28 +64,28 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
 
                 boolean added = cm.addPlayer(correctName, uuid);
                 if (added) {
-                    String msg = cm.getMessage("admin-added", "§a[WL-Admin] %player% (%uuid%) adlı oyuncuya whitelist yetkisi verildi.")
+                    String msg = cm.getMessage("admin-added", "§a[WL-Admin] %player% (%uuid%) has been promoted to Whitelist Manager.")
                             .replace("%player%", correctName)
                             .replace("%uuid%", uuid.toString());
                     sender.sendMessage(msg);
                 } else {
-                    String msg = cm.getMessage("admin-already-exists", "§e[WL-Admin] Bu oyuncu zaten yetki listesinde bulunuyor.");
+                    String msg = cm.getMessage("admin-already-exists", "§e[WL-Admin] This player is already a Whitelist Manager.");
                     sender.sendMessage(msg);
                 }
             }
             case "remove" -> {
                 if (args.length < 2) {
-                    sender.sendMessage("§cKullanım: /wladmin remove <oyuncu>");
+                    sender.sendMessage("§cUsage: /wladmin remove <player>");
                     return true;
                 }
                 String targetName = args[1];
                 boolean removed = cm.removePlayer(targetName);
                 if (removed) {
-                    String msg = cm.getMessage("admin-removed", "§a[WL-Admin] %player% adlı oyuncunun whitelist yetkisi geri alındı.")
+                    String msg = cm.getMessage("admin-removed", "§a[WL-Admin] %player%'s Whitelist Manager privileges have been revoked.")
                             .replace("%player%", targetName);
                     sender.sendMessage(msg);
                 } else {
-                    String msg = cm.getMessage("admin-not-found", "§c[WL-Admin] Yetki listesinde %player% adında bir oyuncu bulunamadı.")
+                    String msg = cm.getMessage("admin-not-found", "§c[WL-Admin] No Whitelist Manager found with the name %player%.")
                             .replace("%player%", targetName);
                     sender.sendMessage(msg);
                 }
@@ -93,17 +93,17 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
             case "list" -> {
                 List<Map<String, String>> players = cm.getAllowedPlayers();
                 if (players.isEmpty()) {
-                    sender.sendMessage("§e[WL-Admin] Yetkilendirilmiş herhangi bir oyuncu bulunmuyor.");
+                    sender.sendMessage("§e[WL-Admin] There are no authorized Whitelist Managers.");
                     return true;
                 }
-                sender.sendMessage("§6§l=== Yetkili Oyuncu Listesi ===");
+                sender.sendMessage("§6§l=== Whitelist Managers List ===");
                 for (Map<String, String> p : players) {
                     sender.sendMessage("§f- §a" + p.get("name") + " §7(" + p.get("uuid") + ")");
                 }
             }
             case "reload" -> {
                 cm.reload();
-                String msg = cm.getMessage("config-reloaded", "§a[WL-Admin] Konfigürasyon dosyası başarıyla yenilendi.");
+                String msg = cm.getMessage("config-reloaded", "§a[WL-Admin] Configuration file has been successfully reloaded.");
                 sender.sendMessage(msg);
             }
             default -> sendUsage(sender);
@@ -116,11 +116,11 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
      * Sends usage guide to console.
      */
     private void sendUsage(CommandSender sender) {
-        sender.sendMessage("§6§l=== WLAdmin Komut Listesi ===");
-        sender.sendMessage("§a/wladmin add <oyuncu> §7- Oyuncuya whitelist yetkisi verir.");
-        sender.sendMessage("§a/wladmin remove <oyuncu> §7- Oyuncunun whitelist yetkisini siler.");
-        sender.sendMessage("§a/wladmin list §7- Yetkili tüm oyuncuları listeler.");
-        sender.sendMessage("§a/wladmin reload §7- Config'i yeniler.");
+        sender.sendMessage("§6§l=== WLAdmin Command List ===");
+        sender.sendMessage("§a/wladmin add <player> §7- Promotes player to Whitelist Manager.");
+        sender.sendMessage("§a/wladmin remove <player> §7- Revokes Whitelist Manager privileges.");
+        sender.sendMessage("§a/wladmin list §7- Lists all authorized managers.");
+        sender.sendMessage("§a/wladmin reload §7- Reloads config.yml.");
     }
 
     @Override

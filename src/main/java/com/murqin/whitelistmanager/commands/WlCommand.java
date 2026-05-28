@@ -36,18 +36,18 @@ public class WlCommand implements CommandExecutor, TabCompleter {
         // Enforce player sender with permission check from config.yml
         if (sender instanceof Player player) {
             if (!cm.isAllowed(player.getUniqueId())) {
-                String msg = cm.getMessage("no-permission", "§cBu komutu kullanmak için yetkiniz bulunmamaktadır!");
+                String msg = cm.getMessage("no-permission", "§cYou do not have permission to execute this command!");
                 sender.sendMessage(msg);
                 return true;
             }
         } else {
             // Advise console to use /wladmin
-            sender.sendMessage("§cKonsol zaten whitelist komutuna sahiptir, lütfen /wladmin kullanın.");
+            sender.sendMessage("§cConsole already has whitelist permissions, please use /wladmin instead.");
             return true;
         }
 
         if (args.length < 2) {
-            sender.sendMessage("§cKullanım: /wl <add|remove> <oyuncu>");
+            sender.sendMessage("§cUsage: /wl <add|remove> <player>");
             return true;
         }
 
@@ -60,12 +60,12 @@ public class WlCommand implements CommandExecutor, TabCompleter {
         switch (sub) {
             case "add" -> {
                 if (targetPlayer.isWhitelisted()) {
-                    String msg = cm.getMessage("whitelist-already-added", "§e%player% zaten whitelist'e ekli.")
+                    String msg = cm.getMessage("whitelist-already-added", "§e%player% is already whitelisted.")
                             .replace("%player%", targetName);
                     sender.sendMessage(msg);
                 } else {
                     targetPlayer.setWhitelisted(true);
-                    String msg = cm.getMessage("whitelist-added", "§a%player% başarıyla whitelist'e eklendi.")
+                    String msg = cm.getMessage("whitelist-added", "§a%player% has been successfully added to the whitelist.")
                             .replace("%player%", targetName);
                     sender.sendMessage(msg);
                 }
@@ -73,29 +73,29 @@ public class WlCommand implements CommandExecutor, TabCompleter {
             case "remove" -> {
                 // Prevent self-lockout: a manager cannot remove themselves from the whitelist
                 if (sender instanceof Player p && targetPlayer.getUniqueId().equals(p.getUniqueId())) {
-                    String msg = cm.getMessage("self-removal-denied", "§cKendi kendinizi whitelist'ten çıkaramazsınız!");
+                    String msg = cm.getMessage("self-removal-denied", "§cYou cannot remove yourself from the whitelist!");
                     sender.sendMessage(msg);
                     return true;
                 }
 
                 if (!targetPlayer.isWhitelisted()) {
-                    String msg = cm.getMessage("whitelist-already-removed", "§e%player% zaten whitelist'te ekli değil.")
+                    String msg = cm.getMessage("whitelist-already-removed", "§e%player% is not whitelisted.")
                             .replace("%player%", targetName);
                     sender.sendMessage(msg);
                 } else {
                     targetPlayer.setWhitelisted(false);
-                    String msg = cm.getMessage("whitelist-removed", "§a%player% başarıyla whitelist'ten çıkarıldı.")
+                    String msg = cm.getMessage("whitelist-removed", "§a%player% has been successfully removed from the whitelist.")
                             .replace("%player%", targetName);
                     sender.sendMessage(msg);
 
                     // Kick the player instantly if they are online using Adventure API
                     if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
-                        String kickMsg = cm.getMessage("kick-reason", "§cWhitelist'ten çıkarıldınız!");
+                        String kickMsg = cm.getMessage("kick-reason", "§cYou have been removed from the whitelist!");
                         targetPlayer.getPlayer().kick(net.kyori.adventure.text.Component.text(kickMsg));
                     }
                 }
             }
-            default -> sender.sendMessage("§cKullanım: /wl <add|remove> <oyuncu>");
+            default -> sender.sendMessage("§cUsage: /wl <add|remove> <player>");
         }
 
         return true;

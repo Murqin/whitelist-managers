@@ -89,6 +89,19 @@ public class WlCommand implements CommandExecutor, TabCompleter {
                     .toList();
         }
 
+        if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+            List<String> whitelistedNames = new ArrayList<>();
+            for (OfflinePlayer op : Bukkit.getWhitelistedPlayers()) {
+                String name = op.getName();
+                if (name != null) {
+                    whitelistedNames.add(name);
+                }
+            }
+            return whitelistedNames.stream()
+                    .filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase()))
+                    .toList();
+        }
+
         return Collections.emptyList();
     }
 }

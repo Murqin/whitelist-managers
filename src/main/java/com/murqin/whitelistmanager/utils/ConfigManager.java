@@ -50,9 +50,25 @@ public class ConfigManager {
 
     public boolean addPlayer(String name, UUID uuid) {
         if (uuid == null || name == null) return false;
-        if (isAllowed(uuid)) return false;
-
+        
         List<Map<String, String>> allowedList = getAllowedPlayers();
+        boolean exists = false;
+        for (Map<String, String> playerMap : allowedList) {
+            String storedUuid = playerMap.get("uuid");
+            if (uuid.toString().equalsIgnoreCase(storedUuid)) {
+                exists = true;
+                // If name changed, update it!
+                if (!name.equalsIgnoreCase(playerMap.get("name"))) {
+                    playerMap.put("name", name);
+                    config.set("allowed-players", allowedList);
+                    plugin.saveConfig();
+                }
+                break;
+            }
+        }
+        
+        if (exists) return false;
+
         Map<String, String> newPlayer = new HashMap<>();
         newPlayer.put("name", name);
         newPlayer.put("uuid", uuid.toString());

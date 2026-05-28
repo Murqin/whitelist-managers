@@ -60,6 +60,9 @@ public class WlCommand implements CommandExecutor, TabCompleter {
                 } else {
                     targetPlayer.setWhitelisted(false);
                     sender.sendMessage("§a" + targetName + " başarıyla whitelist'ten çıkarıldı.");
+                    if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
+                        targetPlayer.getPlayer().kick(net.kyori.adventure.text.Component.text("§cWhitelist'ten çıkarıldınız!"));
+                    }
                 }
             }
             default -> sender.sendMessage("§cKullanım: /wl <add|remove> <oyuncu>");

@@ -1,7 +1,7 @@
 name: Whitelist-Manager
-version: 1.0-SNAPSHOT
+version: 1.0.0
 main: com.murqin.whitelistmanager.WhitelistManager
-api-version: '26'
+api-version: '26.1'
 author: Murqin
 description: Console-delegated whitelist management plugin.
 commands:

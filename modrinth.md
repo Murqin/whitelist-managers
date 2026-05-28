@@ -1,4 +1,4 @@
-# <img src="icon.png" align="right" width="128" /> Whitelist-Managers
+# 🛡️ Whitelist-Managers
 
 [![Minecraft](https://img.shields.io/badge/Minecraft-26.1.2%2B-red.svg?style=flat-square&color=c71d22)](https://papermc.io)
 [![Java](https://img.shields.io/badge/Java-25%2B-blue.svg?style=flat-square&color=e58e26)](https://oracle.com/java)

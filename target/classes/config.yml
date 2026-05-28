@@ -1,0 +1,7 @@
+# Whitelist Manager Configuration
+# Allowed players list. Stored as:
+# allowed-players:
+#   - name: "Murqin"
+#     uuid: "f8c3de3d-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+allowed-players: []

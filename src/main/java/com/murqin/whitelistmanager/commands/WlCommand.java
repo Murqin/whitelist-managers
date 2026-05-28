@@ -1,6 +1,7 @@
 package com.murqin.whitelistmanager.commands;
 
 import com.murqin.whitelistmanager.WhitelistManager;
+import com.murqin.whitelistmanager.utils.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -12,24 +13,35 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+/**
+ * Handles the game-side '/wl' command tree, allowing authorized whitelist managers
+ * to add/remove players to/from the server's vanilla whitelist.
+ */
 public class WlCommand implements CommandExecutor, TabCompleter {
 
     private final WhitelistManager plugin;
 
+    /**
+     * Initializes the command executor.
+     * @param plugin The main plugin instance.
+     */
     public WlCommand(WhitelistManager plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        ConfigManager cm = plugin.getConfigManager();
+
         // Enforce player sender with permission check from config.yml
         if (sender instanceof Player player) {
-            if (!plugin.getConfigManager().isAllowed(player.getUniqueId())) {
-                sender.sendMessage("§cBu komutu kullanmak için yetkiniz bulunmamaktadır!");
+            if (!cm.isAllowed(player.getUniqueId())) {
+                String msg = cm.getMessage("no-permission", "§cBu komutu kullanmak için yetkiniz bulunmamaktadır!");
+                sender.sendMessage(msg);
                 return true;
             }
         } else {
-            // Also allow Console to execute /wl if needed, though they have /wladmin
+            // Advise console to use /wladmin
             sender.sendMessage("§cKonsol zaten whitelist komutuna sahiptir, lütfen /wladmin kullanın.");
             return true;
         }
@@ -48,24 +60,38 @@ public class WlCommand implements CommandExecutor, TabCompleter {
         switch (sub) {
             case "add" -> {
                 if (targetPlayer.isWhitelisted()) {
-                    sender.sendMessage("§e" + targetName + " zaten whitelist'e ekli.");
+                    String msg = cm.getMessage("whitelist-already-added", "§e%player% zaten whitelist'e ekli.")
+                            .replace("%player%", targetName);
+                    sender.sendMessage(msg);
                 } else {
                     targetPlayer.setWhitelisted(true);
-                    sender.sendMessage("§a" + targetName + " başarıyla whitelist'e eklendi.");
+                    String msg = cm.getMessage("whitelist-added", "§a%player% başarıyla whitelist'e eklendi.")
+                            .replace("%player%", targetName);
+                    sender.sendMessage(msg);
                 }
             }
             case "remove" -> {
+                // Prevent self-lockout: a manager cannot remove themselves from the whitelist
                 if (sender instanceof Player p && targetPlayer.getUniqueId().equals(p.getUniqueId())) {
-                    sender.sendMessage("§cKendi kendinizi whitelist'ten çıkaramazsınız!");
+                    String msg = cm.getMessage("self-removal-denied", "§cKendi kendinizi whitelist'ten çıkaramazsınız!");
+                    sender.sendMessage(msg);
                     return true;
                 }
+
                 if (!targetPlayer.isWhitelisted()) {
-                    sender.sendMessage("§e" + targetName + " zaten whitelist'te ekli değil.");
+                    String msg = cm.getMessage("whitelist-already-removed", "§e%player% zaten whitelist'te ekli değil.")
+                            .replace("%player%", targetName);
+                    sender.sendMessage(msg);
                 } else {
                     targetPlayer.setWhitelisted(false);
-                    sender.sendMessage("§a" + targetName + " başarıyla whitelist'ten çıkarıldı.");
+                    String msg = cm.getMessage("whitelist-removed", "§a%player% başarıyla whitelist'ten çıkarıldı.")
+                            .replace("%player%", targetName);
+                    sender.sendMessage(msg);
+
+                    // Kick the player instantly if they are online using Adventure API
                     if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
-                        targetPlayer.getPlayer().kick(net.kyori.adventure.text.Component.text("§cWhitelist'ten çıkarıldınız!"));
+                        String kickMsg = cm.getMessage("kick-reason", "§cWhitelist'ten çıkarıldınız!");
+                        targetPlayer.getPlayer().kick(net.kyori.adventure.text.Component.text(kickMsg));
                     }
                 }
             }
@@ -83,12 +109,14 @@ public class WlCommand implements CommandExecutor, TabCompleter {
             }
         }
 
+        // Sub-commands tab completion
         if (args.length == 1) {
             return Arrays.asList("add", "remove").stream()
                     .filter(s -> s.startsWith(args[0].toLowerCase()))
                     .toList();
         }
 
+        // Suggest currently whitelisted players for '/wl remove <tab>' to make removal simple
         if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             List<String> whitelistedNames = new ArrayList<>();
             for (OfflinePlayer op : Bukkit.getWhitelistedPlayers()) {

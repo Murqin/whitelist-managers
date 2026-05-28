@@ -3,7 +3,7 @@
 [![Minecraft](https://img.shields.io/badge/Minecraft-26.1.2%2B-red.svg?style=flat-square&color=c71d22)](https://papermc.io)
 [![Java](https://img.shields.io/badge/Java-25%2B-blue.svg?style=flat-square&color=e58e26)](https://oracle.com/java)
 [![Platform](https://img.shields.io/badge/Platform-Paper%20%7C%20Purpur-orange.svg?style=flat-square&color=f39c12)](https://papermc.io)
-[![Version](https://img.shields.io/badge/Version-1.2.0-green.svg?style=flat-square&color=2ecc71)](https://github.com)
+[![Version](https://img.shields.io/badge/Version-1.3.0-green.svg?style=flat-square&color=2ecc71)](https://github.com)
 
 **Whitelist-Managers** is a lightweight, robust, and zero-dependency administration tool built exclusively for modern **Paper** and **Purpur** servers (compiled with **Java 25**).
 
@@ -58,6 +58,6 @@ allowed-players:
 ## 📥 Quick Installation Guide
 
 1. Ensure your server is running on **Java 25** (standard for Paper 26.1.2+).
-2. Download `whitelist-managers-1.2.0.jar` and drop it into your server's `plugins/` folder.
+2. Download `whitelist-managers-1.3.0.jar` and drop it into your server's `plugins/` folder.
 3. Start or restart your server.
 4. From the server console terminal, run `/wladmin add YourName` to promote yourself!

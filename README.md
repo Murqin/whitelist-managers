@@ -3,7 +3,7 @@
 [![Minecraft](https://img.shields.io/badge/Minecraft-26.1.2%2B-red.svg?style=flat-square&color=c71d22)](https://papermc.io)
 [![Java](https://img.shields.io/badge/Java-25%2B-blue.svg?style=flat-square&color=e58e26)](https://oracle.com/java)
 [![Platform](https://img.shields.io/badge/Platform-Paper%20%7C%20Purpur-orange.svg?style=flat-square&color=f39c12)](https://papermc.io)
-[![Version](https://img.shields.io/badge/Version-1.2.0-green.svg?style=flat-square&color=2ecc71)](https://github.com)
+[![Version](https://img.shields.io/badge/Version-1.3.0-green.svg?style=flat-square&color=2ecc71)](https://github.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&color=3498db)](LICENSE)
 
 An ultra-lightweight, high-performance, and secure whitelist management utility built explicitly for modern Minecraft servers (**Paper & Purpur**). 
@@ -93,7 +93,7 @@ mvn clean package
 
 ### 3. Retrieve Output Artifact
 The build target will compile and package a shaded `.jar` containing all metadata under:
-`target/whitelist-managers-1.2.0.jar`
+`target/whitelist-managers-1.3.0.jar`
 
 ---
 

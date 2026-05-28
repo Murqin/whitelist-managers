@@ -1,6 +1,7 @@
 package com.murqin.whitelistmanager.commands;
 
 import com.murqin.whitelistmanager.WhitelistManager;
+import com.murqin.whitelistmanager.utils.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -8,23 +9,35 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+/**
+ * Handles the '/wladmin' command tree, restricted exclusively to the server console.
+ * Allows adding, removing, listing, and reloading whitelist managers.
+ */
 public class WlAdminCommand implements CommandExecutor, TabCompleter {
 
     private final WhitelistManager plugin;
 
+    /**
+     * Initializes the command executor.
+     * @param plugin The main plugin instance.
+     */
     public WlAdminCommand(WhitelistManager plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        // Enforce console only sender
+        ConfigManager cm = plugin.getConfigManager();
+
+        // Enforce Console only sender
         if (!(sender instanceof ConsoleCommandSender)) {
-            sender.sendMessage("§c[WL-Admin] Bu komut sadece sunucu konsolundan çalıştırılabilir!");
+            String msg = cm.getMessage("console-only", "§c[WL-Admin] Bu komut sadece sunucu konsolundan çalıştırılabilir!");
+            sender.sendMessage(msg);
             return true;
         }
 
@@ -49,11 +62,15 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
                     correctName = targetName;
                 }
 
-                boolean added = plugin.getConfigManager().addPlayer(correctName, uuid);
+                boolean added = cm.addPlayer(correctName, uuid);
                 if (added) {
-                    sender.sendMessage("§a[WL-Admin] " + correctName + " (" + uuid + ") adlı oyuncuya whitelist yetkisi verildi.");
+                    String msg = cm.getMessage("admin-added", "§a[WL-Admin] %player% (%uuid%) adlı oyuncuya whitelist yetkisi verildi.")
+                            .replace("%player%", correctName)
+                            .replace("%uuid%", uuid.toString());
+                    sender.sendMessage(msg);
                 } else {
-                    sender.sendMessage("§e[WL-Admin] Bu oyuncu zaten yetki listesinde bulunuyor.");
+                    String msg = cm.getMessage("admin-already-exists", "§e[WL-Admin] Bu oyuncu zaten yetki listesinde bulunuyor.");
+                    sender.sendMessage(msg);
                 }
             }
             case "remove" -> {
@@ -62,15 +79,19 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 String targetName = args[1];
-                boolean removed = plugin.getConfigManager().removePlayer(targetName);
+                boolean removed = cm.removePlayer(targetName);
                 if (removed) {
-                    sender.sendMessage("§a[WL-Admin] " + targetName + " adlı oyuncunun whitelist yetkisi geri alındı.");
+                    String msg = cm.getMessage("admin-removed", "§a[WL-Admin] %player% adlı oyuncunun whitelist yetkisi geri alındı.")
+                            .replace("%player%", targetName);
+                    sender.sendMessage(msg);
                 } else {
-                    sender.sendMessage("§c[WL-Admin] Yetki listesinde " + targetName + " adında bir oyuncu bulunamadı.");
+                    String msg = cm.getMessage("admin-not-found", "§c[WL-Admin] Yetki listesinde %player% adında bir oyuncu bulunamadı.")
+                            .replace("%player%", targetName);
+                    sender.sendMessage(msg);
                 }
             }
             case "list" -> {
-                List<Map<String, String>> players = plugin.getConfigManager().getAllowedPlayers();
+                List<Map<String, String>> players = cm.getAllowedPlayers();
                 if (players.isEmpty()) {
                     sender.sendMessage("§e[WL-Admin] Yetkilendirilmiş herhangi bir oyuncu bulunmuyor.");
                     return true;
@@ -81,8 +102,9 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
                 }
             }
             case "reload" -> {
-                plugin.getConfigManager().reload();
-                sender.sendMessage("§a[WL-Admin] Konfigürasyon dosyası başarıyla yenilendi.");
+                cm.reload();
+                String msg = cm.getMessage("config-reloaded", "§a[WL-Admin] Konfigürasyon dosyası başarıyla yenilendi.");
+                sender.sendMessage(msg);
             }
             default -> sendUsage(sender);
         }
@@ -90,6 +112,9 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
+    /**
+     * Sends usage guide to console.
+     */
     private void sendUsage(CommandSender sender) {
         sender.sendMessage("§6§l=== WLAdmin Komut Listesi ===");
         sender.sendMessage("§a/wladmin add <oyuncu> §7- Oyuncuya whitelist yetkisi verir.");
@@ -104,11 +129,22 @@ public class WlAdminCommand implements CommandExecutor, TabCompleter {
             return Collections.emptyList();
         }
 
+        // Sub-commands tab completion
         if (args.length == 1) {
             List<String> list = Arrays.asList("add", "remove", "list", "reload");
             return list.stream().filter(s -> s.startsWith(args[0].toLowerCase())).toList();
         }
 
+        // Suggest online players for '/wladmin add <tab>' to make promotion easy
+        if (args.length == 2 && args[0].equalsIgnoreCase("add")) {
+            List<String> onlineNames = new ArrayList<>();
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                onlineNames.add(p.getName());
+            }
+            return onlineNames.stream().filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).toList();
+        }
+
+        // Suggest currently authorized admins for '/wladmin remove <tab>'
         if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             List<String> names = new ArrayList<>();
             for (Map<String, String> p : plugin.getConfigManager().getAllowedPlayers()) {

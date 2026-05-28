@@ -3,6 +3,7 @@ package com.murqin.whitelistmanager;
 import com.murqin.whitelistmanager.commands.WlAdminCommand;
 import com.murqin.whitelistmanager.commands.WlCommand;
 import com.murqin.whitelistmanager.utils.ConfigManager;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -33,6 +34,10 @@ public final class WhitelistManager extends JavaPlugin {
             getCommand("wladmin").setExecutor(wlAdminCommand);
             getCommand("wladmin").setTabCompleter(wlAdminCommand);
         }
+
+        // Initialize bStats Anonymous Telemetry
+        int pluginId = 31627;
+        new Metrics(this, pluginId);
 
         getLogger().info("Whitelist-Managers plugin has been successfully enabled!");
     }

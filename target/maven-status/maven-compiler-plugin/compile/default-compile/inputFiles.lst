@@ -1,4 +1,4 @@
-/home/murqin/Documents/Minecraft_Plugins/Whitelist-Manager/src/main/java/com/murqin/whitelistmanager/WhitelistManager.java
-/home/murqin/Documents/Minecraft_Plugins/Whitelist-Manager/src/main/java/com/murqin/whitelistmanager/commands/WlAdminCommand.java
-/home/murqin/Documents/Minecraft_Plugins/Whitelist-Manager/src/main/java/com/murqin/whitelistmanager/commands/WlCommand.java
-/home/murqin/Documents/Minecraft_Plugins/Whitelist-Manager/src/main/java/com/murqin/whitelistmanager/utils/ConfigManager.java
+/home/murqin/Documents/Minecraft_Plugins/whitelist-managers/src/main/java/com/murqin/whitelistmanager/WhitelistManager.java
+/home/murqin/Documents/Minecraft_Plugins/whitelist-managers/src/main/java/com/murqin/whitelistmanager/commands/WlAdminCommand.java
+/home/murqin/Documents/Minecraft_Plugins/whitelist-managers/src/main/java/com/murqin/whitelistmanager/commands/WlCommand.java
+/home/murqin/Documents/Minecraft_Plugins/whitelist-managers/src/main/java/com/murqin/whitelistmanager/utils/ConfigManager.java

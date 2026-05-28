@@ -1,7 +1,72 @@
-# Whitelist Manager Configuration
-# Allowed players list. Stored as:
-# allowed-players:
-#   - name: "Murqin"
-#     uuid: "f8c3de3d-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+# ======================================================
+#             Whitelist-Managers Configuration
+# ======================================================
+#
+# GitHub: https://github.com
+# Modrinth: https://modrinth.com
 
+# ------------------------------------------------------
+# 1. Allowed Whitelist Managers
+# ------------------------------------------------------
+# List of authorized players who can manage the whitelist.
+# We highly recommend managing this list exclusively using
+# the console command: '/wladmin <add|remove> <player>'.
 allowed-players: []
+
+# ------------------------------------------------------
+# 2. Localized Messages & Language Settings
+# ------------------------------------------------------
+# Translate any system message into your own language here.
+# Color codes using standard '&' or '§' symbols are supported.
+#
+# Placeholders:
+#   %player% - The target player name
+#   %uuid%   - The target player UUID
+
+# Default Language: English (Active)
+messages:
+  # In-game permissions error
+  no-permission: "&cYou do not have permission to execute this command!"
+  
+  # Console-only command restriction
+  console-only: "&c[WL-Admin] This command can only be executed from the server console!"
+  
+  # Self-removal protection error
+  self-removal-denied: "&cYou cannot remove yourself from the whitelist!"
+  
+  # Admin administration messages
+  admin-added: "&a[WL-Admin] %player% (%uuid%) has been promoted to Whitelist Manager."
+  admin-already-exists: "&e[WL-Admin] This player is already a Whitelist Manager."
+  admin-removed: "&a[WL-Admin] %player%'s Whitelist Manager privileges have been revoked."
+  admin-not-found: "&c[WL-Admin] No Whitelist Manager found with the name %player%."
+  config-reloaded: "&a[WL-Admin] Configuration file has been successfully reloaded."
+  
+  # Whitelist command messages
+  whitelist-already-added: "&e%player% is already whitelisted."
+  whitelist-added: "&a%player% has been successfully added to the whitelist."
+  whitelist-already-removed: "&e%player% is not whitelisted."
+  whitelist-removed: "&a%player% has been successfully removed from the whitelist."
+  
+  # Kick screen message when a player is removed from whitelist
+  kick-reason: "&cYou have been removed from the whitelist!"
+
+# ------------------------------------------------------
+# 3. Optional Translations (Türkçe Çeviri)
+# ------------------------------------------------------
+# Türkçe kullanmak için aşağıdaki değerleri kopyalayıp 
+# yukarıdaki 'messages:' kısmıyla değiştirebilirsiniz:
+#
+# messages:
+#   no-permission: "&cBu komutu kullanmak için yetkiniz bulunmamaktadır!"
+#   console-only: "&c[WL-Admin] Bu komut sadece sunucu konsolundan çalıştırılabilir!"
+#   self-removal-denied: "&cKendi kendinizi whitelist'ten çıkaramazsınız!"
+#   admin-added: "&a[WL-Admin] %player% (%uuid%) adlı oyuncuya whitelist yetkisi verildi."
+#   admin-already-exists: "&e[WL-Admin] Bu oyuncu zaten yetki listesinde bulunuyor."
+#   admin-removed: "&a[WL-Admin] %player% adlı oyuncunun whitelist yetkisi geri alındı."
+#   admin-not-found: "&c[WL-Admin] Yetki listesinde %player% adında bir oyuncu bulunamadı."
+#   config-reloaded: "&a[WL-Admin] Konfigürasyon dosyası başarıyla yenilendi."
+#   whitelist-already-added: "&e%player% zaten whitelist'e ekli."
+#   whitelist-added: "&a%player% başarıyla whitelist'e eklendi."
+#   whitelist-already-removed: "&e%player% zaten whitelist'te ekli değil."
+#   whitelist-removed: "&a%player% başarıyla whitelist'ten çıkarıldı."
+#   kick-reason: "&cWhitelist'ten çıkarıldınız!"

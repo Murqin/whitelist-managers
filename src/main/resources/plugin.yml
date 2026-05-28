@@ -1,5 +1,5 @@
 name: Whitelist-Managers
-version: 1.4.0
+version: 1.5.0
 main: com.murqin.whitelistmanager.WhitelistManager
 api-version: '26.1'
 author: Murqin

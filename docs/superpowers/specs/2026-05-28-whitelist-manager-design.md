@@ -50,11 +50,11 @@ Handles:
 
 ### 2.5 `WlAdminCommand.java`
 Handles the console command `/wladmin <add|remove|list|reload>`.
-- **Constraint**: Must enforce `sender instanceof ConsoleCommandSender`. If false, returns an error: `§c[WL-Admin] Bu komut sadece sunucu konsolundan çalıştırılabilir!`
+- **Constraint**: Must enforce `sender instanceof ConsoleCommandSender`. If false, returns an error: `§c[WL-Admin] This command can only be executed from the server console!`
 
 ### 2.6 `WlCommand.java`
 Handles the player command `/wl <add|remove> <player>`.
-- **Constraint**: Checks if `sender` is a player and their UUID exists in the configuration's authorized list. If not, returns: `§cBu komutu kullanmak için yetkiniz bulunmamaktadır!`
+- **Constraint**: Checks if `sender` is a player and their UUID exists in the configuration's authorized list. If not, returns: `§cYou do not have permission to execute this command!`
 
 ---
 
@@ -75,8 +75,8 @@ allowed-players:
 
 ### Manual Verification
 1. Run the server locally.
-2. Attempt to run `/wladmin add Murqin` from the in-game chat (even as OP). Verify it fails with: `Bu komut sadece sunucu konsolundan çalıştırılabilir!`
+2. Attempt to run `/wladmin add Murqin` from the in-game chat (even as OP). Verify it fails with: `This command can only be executed from the server console!`
 3. Run `/wladmin add Murqin` from the console. Verify it succeeds and records the UUID in `config.yml`.
 4. Log in as `Murqin` and execute `/wl add TestPlayer`. Verify `TestPlayer` is added to the server's whitelist and Bukkit Whitelist system.
-5. Log in as another player and try `/wl add TestPlayer`. Verify it fails with `Bu komutu kullanmak için yetkiniz bulunmamaktadır!`.
+5. Log in as another player and try `/wl add TestPlayer`. Verify it fails with `You do not have permission to execute this command!`.
 6. Run `/wladmin remove Murqin` from the console. Verify `Murqin` is removed from `config.yml` and can no longer execute `/wl` commands.

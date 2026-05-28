@@ -20,6 +20,7 @@ It provides server administrators with a simple, secure, and OP-safe mechanism t
 *   **💡 Intelligent Tab-Completion**:
     *   `/wl remove <tab>` dynamically suggests only currently whitelisted players on the server.
     *   `/wladmin remove <tab>` suggests only currently promoted whitelist managers.
+*   **📊 Anonymous Telemetry**: Seamless background metrics collection via bStats (completely relocated to avoid library conflicts).
 *   **🌱 Ultra-Lightweight & Clean**: Standalone plugin with zero database or LuckPerms dependencies. Extremely high-performance impact.
 
 ---

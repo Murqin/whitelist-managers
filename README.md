@@ -21,6 +21,7 @@ An ultra-lightweight, high-performance, and secure whitelist management utility 
 - **🔍 Context-Aware Intelligent Tab-Completion**:
   - `/wl remove <tab>` dynamically suggests only currently whitelisted players on the server.
   - `/wladmin remove <tab>` suggests only currently promoted whitelist managers.
+- **📊 Real-time Anonymous Telemetry (bStats)**: Integrates industry-standard bStats telemetry (package relocated securely to avoid conflicts) to safely track server counts and platform statistics in the background.
 - **🌱 Zero Dependencies**: Completely standalone. No LuckPerms, external databases, or heavy libraries required. Extremely lightweight performance impact.
 
 ---

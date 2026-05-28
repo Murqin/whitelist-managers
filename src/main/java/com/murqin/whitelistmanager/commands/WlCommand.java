@@ -55,6 +55,10 @@ public class WlCommand implements CommandExecutor, TabCompleter {
                 }
             }
             case "remove" -> {
+                if (sender instanceof Player p && targetPlayer.getUniqueId().equals(p.getUniqueId())) {
+                    sender.sendMessage("§cKendi kendinizi whitelist'ten çıkaramazsınız!");
+                    return true;
+                }
                 if (!targetPlayer.isWhitelisted()) {
                     sender.sendMessage("§e" + targetName + " zaten whitelist'te ekli değil.");
                 } else {

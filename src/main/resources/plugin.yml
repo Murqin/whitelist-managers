@@ -6,8 +6,8 @@ author: Murqin
 description: Console-delegated whitelist management plugin.
 commands:
   wl:
-    description: Oyun ici whitelist ekleme/cikarma komutu.
-    usage: /wl <add|remove> <oyuncu>
+    description: In-game whitelist add/remove command.
+    usage: /wl <add|remove> <player>
   wladmin:
-    description: Konsoldan whitelist yetkililerini yonetme komutu.
+    description: Console-delegated whitelist managers management command.
     usage: /wladmin <add|remove|list|reload>

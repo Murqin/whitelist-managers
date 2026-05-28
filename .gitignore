@@ -1,0 +1,10 @@
+# Maven build outputs
+target/
+
+# Shaded POM output
+dependency-reduced-pom.xml
+
+# IDE and system files
+.idea/
+*.iml
+.DS_Store

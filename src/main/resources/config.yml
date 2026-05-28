@@ -54,10 +54,10 @@ messages:
   kick-reason: "&cYou have been removed from the whitelist!"
 
 # ------------------------------------------------------
-# 3. Optional Translations (Türkçe Çeviri)
+# 3. Optional Translations (Turkish Translation)
 # ------------------------------------------------------
-# Türkçe kullanmak için aşağıdaki değerleri kopyalayıp 
-# yukarıdaki 'messages:' kısmıyla değiştirebilirsiniz:
+# To use the Turkish translation, you can copy the values below
+# and replace the 'messages:' section above with them:
 #
 # messages:
 #   no-permission: "&cBu komutu kullanmak için yetkiniz bulunmamaktadır!"
